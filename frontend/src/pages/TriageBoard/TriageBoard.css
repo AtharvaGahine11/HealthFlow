@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #3b82f6;
+  --bg-color: #f8fafc;
+  --glass: rgba(255, 255, 255, 0.9);
+  --text-dark: #0f172a;
+  --text-light: #64748b;
+}
+
+/* --- LAYOUT FIX --- */
+.triage-container {
+  display: flex;
+  height: 100vh;        /* Force full viewport height */
+  overflow: hidden;     /* Prevent the whole window from scrolling */
+  font-family: 'Outfit', sans-serif;
+  background-color: #f1f5f9;
+}
+
+.triage-main {
+  flex: 1;
+  margin-left: 260px;   /* Match your sidebar width */
+  height: 100%;         /* Fill the visible height */
+  overflow-y: auto;     /* ENABLE SCROLLING inside this panel */
+  padding: 3rem 4rem;
+  position: relative;
+  
+  /* Tech Grid Background */
+  background-image: 
+    linear-gradient(#e2e8f0 1px, transparent 1px),
+    linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+/* ------------------ */
+
+.triage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  animation: slideDown 0.8s ease-out;
+}
+
+.triage-header h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.triage-header p {
+  color: var(--text-light);
+  font-size: 1.1rem;
+  margin: 5px 0 0 0;
+}
+
+/* --- Responsive Grid --- */
+.triage-grid {
+  display: grid;
+  /* Adjusts columns automatically based on available width */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  padding-bottom: 6rem; /* Extra space at bottom so last cards aren't cut off */
+}
+
+/* --- Card Styles --- */
+.triage-card {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  padding: 1.8rem;
+  border-radius: 20px;
+  border: 1px solid white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  animation: popIn 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.triage-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+}
+
+/* Critical Pulse */
+.triage-card.critical {
+  border: 1px solid #fecaca;
+  animation: criticalPulse 2s infinite;
+}
+
+@keyframes criticalPulse {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.patient-id {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  background: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-family: monospace;
+}
+
+.triage-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 0.2rem 0;
+}
+
+.room-text {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  display: block;
+}
+
+/* Badges */
+.status-pill {
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.status-pill.critical { background: #fee2e2; color: #ef4444; }
+.status-pill.urgent { background: #fef3c7; color: #d97706; }
+.status-pill.stable { background: #dcfce7; color: #10b981; }
+
+/* Wait Time */
+.wait-time-container {
+  margin: 1rem 0;
+}
+.wait-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.progress-bg {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+/* Doctor Select */
+.select-wrapper {
+  margin-top: auto;
+}
+.doctor-select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-dark);
+  font-weight: 500;
+  cursor: pointer;
+  appearance: none;
+}
+.doctor-select:hover {
+  border-color: var(--primary);
+  background: #f8fafc;
+}
+
+/* Animations */
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.95) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,315 @@
+/* Global Reset & Typography */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #0ea5e9;        /* Modern Sky Blue */
+  --primary-dark: #0284c7;   /* Deep Blue */
+  --text-main: #0f172a;      /* Dark Slate */
+  --text-muted: #64748b;     /* Muted Slate */
+  --bg-soft: #f8fafc;        /* Very light slate bg */
+  --white: #ffffff;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--text-main);
+  background-color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content, .features-grid, .role-grid {
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+/* Navbar - Minimal & Glass Effect */
+.navbar {
+  display: flex;
+  align-items: center; /* Vertically center the logo */
+  padding: 1rem 4rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.5px;
+  cursor: pointer;
+}
+
+/* Hero Section - Modern Grid Background */
+.hero {
+  padding: 10rem 2rem 8rem;
+  text-align: center;
+  position: relative;
+  background-color: #ffffff;
+  /* Cool grid pattern */
+  background-image: radial-gradient(#e0f2fe 1px, transparent 1px), radial-gradient(#e0f2fe 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+  overflow: hidden;
+}
+
+/* Decorative blurry glow */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(255,255,255,0) 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  background: linear-gradient(135deg, var(--text-main) 30%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  margin-bottom: 3rem;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.hero-btn {
+  padding: 1.2rem 3.5rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.hero-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(14, 165, 233, 0.6);
+}
+
+/* Features Section */
+.features-section {
+  padding: 8rem 4rem;
+  background: var(--white);
+  text-align: center;
+}
+
+.features-section h2 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+}
+
+.subtext {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 5rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 24px;
+  border: 1px solid #f1f5f9;
+  text-align: left;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+  border-color: #bae6fd;
+}
+
+.icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  background: #f0f9ff;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  color: var(--primary);
+}
+
+.feature-card h3 {
+  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.feature-card p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Role Section */
+.role-section {
+  padding: 8rem 4rem;
+  background: #f8fafc;
+  text-align: center;
+  border-top: 1px solid #e2e8f0;
+}
+
+.role-section h2 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.role-grid {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.role-card {
+  background: white;
+  border-radius: 30px;
+  padding: 3rem 2rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.role-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  border-color: var(--primary);
+}
+
+.role-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s;
+}
+
+.role-card:hover .role-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.role-card h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.role-card p {
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.role-link {
+  display: inline-block;
+  width: 100%;
+  padding: 1rem 0;
+  border-radius: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--bg-soft);
+  color: var(--text-main);
+  border: 1px solid transparent;
+}
+
+.role-card:hover .role-link {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+  transform: scale(1.02);
+}
+
+/* Footer */
+.footer {
+  padding: 4rem;
+  text-align: center;
+  background: white;
+  color: var(--text-muted);
+  font-weight: 500;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 1.5rem;
+    justify-content: center; /* Center logo on mobile */
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+  }
+  
+  .features-section, .role-section {
+    padding: 4rem 1.5rem;
+  }
+}

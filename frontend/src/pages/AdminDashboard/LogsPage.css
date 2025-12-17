@@ -1,0 +1,37 @@
+.logs-container {
+    padding: 30px;
+    margin-left: 260px; /* Space for sidebar */
+  }
+  
+  .logs-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0077cc;
+    margin-bottom: 20px;
+  }
+  
+  .logs-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .logs-table th {
+    background: #e8f4ff;
+    padding: 14px;
+    text-align: left;
+    font-weight: 600;
+    color: #005b96;
+  }
+  
+  .logs-table td {
+    padding: 14px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  .logs-table tr:hover {
+    background: #f7fbff;
+  }
+  
