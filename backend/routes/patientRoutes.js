@@ -28,7 +28,8 @@ router.put("/:id/assign-doctor", auth(["admin", "doctor"]), assignDoctor);
 router.get("/:id", auth(["admin", "doctor", "nurse"]), getPatientById);
 
 // Update patient
-router.put("/:id", auth(["admin", "doctor"]), updatePatient);
+router.put("/:id", auth(["admin", "doctor", "nurse"]), updatePatient);
+
 
 // Delete patient
 router.delete("/:id", auth(["admin"]), deletePatient);

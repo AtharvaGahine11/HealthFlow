@@ -56,9 +56,9 @@ export default function TriageBoard() {
   };
 
   const getProgressColor = (mins) => {
-    if (mins < 15) return "#10b981"; // Green
-    if (mins < 45) return "#f59e0b"; // Orange
-    return "#ef4444";                // Red
+    if (mins < 15) return "linear-gradient(90deg, #10b981, #34d399)"; // Green Gradient
+    if (mins < 45) return "linear-gradient(90deg, #f59e0b, #fbbf24)"; // Orange Gradient
+    return "linear-gradient(90deg, #ef4444, #f87171)";                // Red Gradient
   };
 
   const getProgressWidth = (mins) => {
@@ -77,10 +77,10 @@ export default function TriageBoard() {
             <p>Real-time patient prioritization & assignments</p>
           </div>
           <div style={{ textAlign: "right" }}>
-            <h2 style={{fontSize: '3rem', margin: 0, color: '#0f172a', fontWeight: '800'}}>
+            <h2 className="active-count">
               {patients.length}
             </h2>
-            <p style={{margin:0, color: '#64748b', fontWeight: '600'}}>Active Patients</p>
+            <p className="active-label">Active Patients</p>
           </div>
         </div>
 
@@ -118,7 +118,7 @@ export default function TriageBoard() {
                       className="progress-fill"
                       style={{
                         width: `${getProgressWidth(waitMins)}%`,
-                        backgroundColor: getProgressColor(waitMins),
+                        background: getProgressColor(waitMins), // Changed prop name to match logic
                       }}
                     ></div>
                   </div>

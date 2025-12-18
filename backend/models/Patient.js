@@ -28,7 +28,7 @@ const PatientSchema = new mongoose.Schema({
     bp: { type: String, default: "--" },
     temperature: { type: Number, default: null },
     spo2: { type: Number, default: null },
-    pulse: { type: Number, default: null }
+    pulse: { type: Number, default: null },
   },
 
   // -----------------------------
@@ -36,13 +36,13 @@ const PatientSchema = new mongoose.Schema({
   // -----------------------------
   vitalsHistory: [
     {
-      bp: String,
-      temperature: Number,
-      spo2: Number,
-      pulse: Number,
-      time: { type: Date, default: Date.now }
+      bp: { type: String },
+      temperature: { type: Number },
+      spo2: { type: Number },
+      pulse: { type: Number },
+      recordedAt: { type: Date, default: Date.now }
     }
-  ]
+  ],
 });
 
 module.exports = mongoose.model("Patient", PatientSchema);

@@ -64,11 +64,11 @@ export default function AdminLogin() {
           <button className="login-btn" onClick={loginAdmin}>Sign In to Dashboard</button>
 
           <div className="switch-portal">
-            <p>Not an Administrator?</p>
+            <p>Switch Portal Access</p>
             <div className="portal-buttons">
               <Link to="/admin-login" className="portal-btn active">🧠 Admin</Link>
               <Link to="/doctor-login" className="portal-btn">🩺 Doctor</Link>
-              <Link to="/nurse-login" className="portal-btn">💚 Nurse</Link>
+              <Link to="/nurse-login" className="portal-btn">👩🏻‍⚕️ Nurse</Link>
             </div>
           </div>
         </div>

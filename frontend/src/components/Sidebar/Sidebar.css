@@ -1,126 +1,187 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --sidebar-width: 260px;
-  --primary: #3b82f6;      /* Bright Blue */
-  --primary-glow: rgba(59, 130, 246, 0.15);
-  --text-dark: #0f172a;    /* Slate 900 */
-  --text-muted: #64748b;   /* Slate 500 */
+  --sidebar-width: 280px;
+  --primary: #0ea5e9;        /* Sky Blue */
+  --primary-dark: #0284c7;   /* Deep Blue */
+  --text-main: #0f172a;      /* Dark Slate */
+  --text-muted: #64748b;     /* Muted Slate */
   --bg-sidebar: #ffffff;
-  --bg-hover: #f1f5f9;
+  --bg-hover: #f0f9ff;       /* Very light blue hover */
+  --border-color: #e2e8f0;
 }
 
+/* Sidebar Container */
 .sidebar {
   width: var(--sidebar-width);
   height: 100vh;
   background: var(--bg-sidebar);
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 1.5rem;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
-  font-family: 'Outfit', sans-serif;
-  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.02);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  box-shadow: 4px 0 30px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
 }
 
-/* Logo & Role Badge */
+/* Animations */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes shine {
+  0% { left: -100px; }
+  20% { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* Logo Section */
+.logo-container {
+  text-align: center;
+  margin-bottom: 3rem;
+  animation: slideInLeft 0.5s ease-out;
+}
+
 .logo {
   font-size: 1.8rem;
   font-weight: 800;
-  color: var(--text-dark);
+  color: var(--text-main);
   margin: 0 0 1rem 0;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
+/* Role Badge */
 .role-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #eff6ff;
-  color: var(--primary);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.85rem;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  border: 1px solid transparent;
+  transition: transform 0.3s ease;
 }
 
-/* Navigation Links */
+.role-badge:hover {
+  transform: scale(1.05);
+}
+
+/* Navigation */
 nav {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  flex: 1; /* Pushes content down */
+  flex: 1;
 }
 
 .sidebar-link {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 14px 18px;
+  padding: 14px 20px;
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: 500;
-  border-radius: 14px;
-  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 4px solid transparent;
+  
+  /* Animation Setup */
+  opacity: 0; 
+  animation: slideInLeft 0.5s ease-out forwards;
 }
 
 .sidebar-link svg {
   font-size: 1.2rem;
   color: #94a3b8;
-  transition: color 0.2s;
+  transition: transform 0.3s, color 0.3s;
 }
 
 /* Hover State */
 .sidebar-link:hover {
   background: var(--bg-hover);
-  color: var(--text-dark);
-  transform: translateX(4px);
+  color: var(--primary-dark);
+  transform: translateX(5px);
 }
 
 .sidebar-link:hover svg {
   color: var(--primary);
+  transform: scale(1.1);
 }
 
 /* Active State */
 .sidebar-link.active {
-  background: var(--primary-glow);
-  color: var(--primary);
+  background: var(--bg-hover);
+  color: var(--primary-dark);
   font-weight: 700;
+  border-left-color: var(--primary);
 }
 
 .sidebar-link.active svg {
   color: var(--primary);
 }
 
-/* Logout Button */
+/* Logout Button (Premium Style) */
 .logout-btn {
   width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #1900ff 0%, #0360bd 100%);
+  padding: 1rem;
+  margin-top: auto;
+  background: linear-gradient(135deg, var(--text-main) 0%, #334155 100%);
   color: white;
   border: none;
-  border-radius: 14px;
-  font-family: 'Outfit', sans-serif;
+  border-radius: 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15);
+  position: relative;
+  overflow: hidden;
+  animation: slideInLeft 0.8s ease-out forwards;
+  animation-delay: 0.5s; /* Delays button appearance */
+  opacity: 0;
+}
+
+/* Shine Effect */
+.logout-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100px;
+  width: 50px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: skewX(-20deg);
+  transition: none;
+}
+
+.logout-btn:hover::after {
+  animation: shine 1s ease;
 }
 
 .logout-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.25);
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); /* Turns Red on Hover */
 }
 
 .logout-btn:active {

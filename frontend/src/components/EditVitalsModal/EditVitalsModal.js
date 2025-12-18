@@ -7,14 +7,11 @@ export default function EditVitalsModal({ patient, setOpen, onVitalsUpdate }) {
     bp: patient.vitals?.bp || "",
     temperature: patient.vitals?.temperature || "",
     spo2: patient.vitals?.spo2 || "",
-    pulse: patient.vitals?.pulse || "",   // ✅ Ensure pulse loads correctly
+    pulse: patient.vitals?.pulse || "",   
   });
 
   const token = localStorage.getItem("token");
 
-  // -------------------------------
-  // UPDATE VITALS
-  // -------------------------------
   const updateVitals = async () => {
     try {
       await axios.put(
@@ -24,16 +21,13 @@ export default function EditVitalsModal({ patient, setOpen, onVitalsUpdate }) {
             bp: form.bp,
             temperature: form.temperature,
             spo2: form.spo2,
-            pulse: form.pulse,   // ✅ Send pulse to backend
+            pulse: form.pulse,   
           }
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // Refresh parent component (PatientProfile)
       onVitalsUpdate();
-
-      // Close modal
       setOpen(false);
 
     } catch (err) {
@@ -46,32 +40,44 @@ export default function EditVitalsModal({ patient, setOpen, onVitalsUpdate }) {
       <div className="modal-box">
         <h2>Edit Vitals</h2>
 
+        {/* BP Input */}
+        <label className="input-label">Blood Pressure</label>
         <input
           type="text"
-          placeholder="Blood Pressure (e.g. 120/80)"
+          placeholder="e.g. 120/80"
           value={form.bp}
           onChange={(e) => setForm({ ...form, bp: e.target.value })}
+          style={{ animationDelay: '0.1s' }} 
         />
 
+        {/* Pulse Input */}
+        <label className="input-label">Pulse (BPM)</label>
         <input
           type="number"
-          placeholder="Temperature (°F)"
-          value={form.temperature}
-          onChange={(e) => setForm({ ...form, temperature: e.target.value })}
-        />
-
-        <input
-          type="number"
-          placeholder="SpO₂ (%)"
-          value={form.spo2}
-          onChange={(e) => setForm({ ...form, spo2: e.target.value })}
-        />
-
-        <input
-          type="number"
-          placeholder="Pulse (bpm)"
+          placeholder="e.g. 72"
           value={form.pulse}
           onChange={(e) => setForm({ ...form, pulse: e.target.value })}
+          style={{ animationDelay: '0.2s' }}
+        />
+
+        {/* Temp Input */}
+        <label className="input-label">Temperature (°F)</label>
+        <input
+          type="number"
+          placeholder="e.g. 98.6"
+          value={form.temperature}
+          onChange={(e) => setForm({ ...form, temperature: e.target.value })}
+          style={{ animationDelay: '0.3s' }}
+        />
+
+        {/* SpO2 Input */}
+        <label className="input-label">SpO₂ (%)</label>
+        <input
+          type="number"
+          placeholder="e.g. 99"
+          value={form.spo2}
+          onChange={(e) => setForm({ ...form, spo2: e.target.value })}
+          style={{ animationDelay: '0.4s' }}
         />
 
         <div className="modal-actions">
@@ -80,7 +86,7 @@ export default function EditVitalsModal({ patient, setOpen, onVitalsUpdate }) {
           </button>
 
           <button className="save" onClick={updateVitals}>
-            Save
+            Save Changes
           </button>
         </div>
       </div>

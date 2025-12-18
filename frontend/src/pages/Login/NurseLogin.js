@@ -63,7 +63,7 @@ export default function NurseLogin() {
           <button className="login-btn" onClick={loginNurse}>Sign In to Portal</button>
 
           <div className="switch-portal">
-            <p>Not a Nurse?</p>
+            <p>Switch Portal Access</p>
             <div className="portal-buttons">
               <Link to="/admin-login" className="portal-btn">🧠 Admin</Link>
               <Link to="/doctor-login" className="portal-btn">🩺 Doctor</Link>

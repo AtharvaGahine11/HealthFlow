@@ -1,5 +1,5 @@
 const Patient = require("../models/Patient");
-const Log = require("../models/LOG.JS"); // Make sure filename is EXACTLY "LOG.JS"
+const Log = require("../models/LOG.JS"); // Case-sensitive
 
 // -------------------------------------------------------
 // Add Patient
@@ -58,28 +58,45 @@ exports.getPatientById = async (req, res) => {
 };
 
 // -------------------------------------------------------
-// Update Patient (Admin + Doctor)
+// Update Patient (Vitals Update + Any Data)
 // -------------------------------------------------------
 exports.updatePatient = async (req, res) => {
   try {
-    const updated = await Patient.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const patient = await Patient.findById(req.params.id);
 
-    if (!updated) {
+    if (!patient) {
       return res.status(404).json({ message: "Patient not found" });
     }
+
+    // If vitals are being updated -> save previous to HISTORY
+    if (req.body.vitals) {
+      const historyEntry = {
+        bp: req.body.vitals.bp,
+        temperature: req.body.vitals.temperature,
+        spo2: req.body.vitals.spo2,
+        pulse: req.body.vitals.pulse,
+        recordedAt: new Date()
+      };
+
+      patient.vitalsHistory.push(historyEntry);
+
+      // Update current vitals
+      patient.vitals = req.body.vitals;
+    }
+
+    // Apply remaining updates
+    Object.assign(patient, req.body);
+
+    const updatedPatient = await patient.save();
 
     await Log.create({
       action: "Updated Patient",
       performedBy: req.user.id,
-      patient: req.params.id,
-      details: "Patient data updated",
+      patient: updatedPatient._id,
+      details: "Patient details updated",
     });
 
-    res.json(updated);
+    res.json(updatedPatient);
   } catch (err) {
     console.error("Update Patient Error:", err);
     res.status(500).json({ message: "Error updating patient" });
@@ -87,7 +104,7 @@ exports.updatePatient = async (req, res) => {
 };
 
 // -------------------------------------------------------
-// Assign Doctor to Patient (Triage Board)
+// Assign Doctor to Patient
 // -------------------------------------------------------
 exports.assignDoctor = async (req, res) => {
   try {
@@ -107,7 +124,6 @@ exports.assignDoctor = async (req, res) => {
       return res.status(404).json({ message: "Patient not found" });
     }
 
-    // Log action
     await Log.create({
       action: "Assigned Doctor",
       performedBy: req.user.id,
@@ -139,7 +155,7 @@ exports.getAssignedPatients = async (req, res) => {
 };
 
 // -------------------------------------------------------
-// Delete Patient (Admin Only)
+// Delete Patient
 // -------------------------------------------------------
 exports.deletePatient = async (req, res) => {
   try {

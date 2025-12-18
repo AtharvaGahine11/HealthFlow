@@ -1,133 +1,184 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-/* ---------- DARK GLASS OVERLAY ---------- */
+:root {
+  --primary: #0ea5e9;        /* Sky Blue */
+  --primary-dark: #0284c7;   /* Deep Blue */
+  --text-main: #0f172a;      /* Dark Slate */
+  --text-muted: #64748b;     /* Muted Slate */
+  --bg-input: #f8fafc;
+  --white: #ffffff;
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* ---------- ANIMATED OVERLAY ---------- */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(15, 23, 42, 0.65); /* Deep Navy Tint */
-  backdrop-filter: blur(8px);        /* Strong Blur */
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(15, 23, 42, 0.6); /* Dark Slate Tint */
+  backdrop-filter: blur(12px);       /* High Blur */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2000;
-  animation: fadeIn 0.3s ease-out;
+  animation: overlayFadeIn 0.4s ease-out forwards;
+  opacity: 0;
 }
 
-/* ---------- GLASS MODAL BOX ---------- */
+/* ---------- PREMIUM GLASS MODAL ---------- */
 .modal-box {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.9);
   width: 100%;
-  max-width: 420px;
-  padding: 2.5rem;
-  border-radius: 24px;
-  box-shadow: 
-    0 20px 25px -5px rgba(0, 0, 0, 0.1), 
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  font-family: 'Outfit', sans-serif;
+  max-width: 450px;
+  padding: 3rem;
+  border-radius: 32px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--white);
+  font-family: 'Plus Jakarta Sans', sans-serif;
   position: relative;
-  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  overflow: hidden;
+  
+  /* Initial State for Animation */
+  opacity: 0;
+  transform: scale(0.9) translateY(20px);
+  animation: modalPopUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 0.1s;
 }
 
 .modal-box h2 {
   text-align: center;
-  margin: 0 0 1.5rem 0;
-  color: #0f172a;
-  font-size: 1.8rem;
-  font-weight: 700;
-  letter-spacing: -0.5px;
+  margin: 0 0 2rem 0;
+  color: var(--text-main);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -1px;
 }
 
-/* ---------- MODERN INPUTS ---------- */
-.input-group {
-  margin-bottom: 1.2rem;
-}
-
-.input-group label {
+/* ---------- ANIMATED LABELS ---------- */
+.input-label {
   display: block;
   font-size: 0.85rem;
-  color: #64748b;
-  margin-bottom: 6px;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  
+  /* Animation Setup */
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fieldSlideUp 0.5s ease-out forwards;
 }
 
+/* ---------- ANIMATED INPUTS ---------- */
 .modal-box input {
   width: 100%;
-  padding: 14px 16px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.2rem;
   border: 2px solid #e2e8f0;
-  background: #f8fafc;
+  background: var(--bg-input);
   border-radius: 14px;
   font-size: 1rem;
-  color: #334155;
-  font-family: 'Outfit', sans-serif;
-  transition: all 0.2s ease;
+  color: var(--text-main);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: all 0.3s ease;
   outline: none;
-  box-sizing: border-box;
+  
+  /* Animation Setup */
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fieldSlideUp 0.5s ease-out forwards;
 }
 
 .modal-box input:focus {
-  border-color: #3b82f6;
-  background: #fff;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  border-color: var(--primary);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+  transform: translateY(-2px);
 }
 
 .modal-box input::placeholder {
-  color: #94a3b8;
+  color: var(--text-muted);
+  font-weight: 500;
 }
 
 /* ---------- ACTION BUTTONS ---------- */
 .modal-actions {
   display: flex;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
+  opacity: 0; /* Animated separately */
+  animation: fieldSlideUp 0.5s ease-out forwards;
+  animation-delay: 0.6s;
 }
 
 .modal-actions button {
   flex: 1;
-  padding: 14px;
-  border-radius: 12px;
+  padding: 1rem;
+  border-radius: 14px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   border: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.3s ease;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 /* Cancel Button */
 .cancel {
   background: #f1f5f9;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .cancel:hover {
   background: #e2e8f0;
-  color: #475569;
+  color: var(--text-main);
+  transform: translateY(-2px);
 }
 
-/* Save Button */
+/* Save Button (Shiny) */
 .save {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shine Effect */
+.save::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100px; width: 50px; height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: skewX(-20deg);
+  transition: none;
+}
+
+.save:hover::after {
+  animation: shine 1s ease;
 }
 
 .save:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
 }
 
-/* ---------- ANIMATIONS ---------- */
-@keyframes fadeIn {
-  from { opacity: 0; }
+/* ---------- KEYFRAMES ---------- */
+@keyframes overlayFadeIn {
   to { opacity: 1; }
 }
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes modalPopUp {
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes fieldSlideUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shine {
+  0% { left: -100px; }
+  20% { left: 100%; }
+  100% { left: 100%; }
 }

@@ -7,10 +7,11 @@ import {
   PointElement,
   Tooltip,
   Legend,
-  Filler // Imported Filler for area background effects if needed
+  Filler,
 } from "chart.js";
 import "./VitalsChart.css";
 
+// Register ChartJS components
 ChartJS.register(
   LineElement,
   CategoryScale,
@@ -22,115 +23,142 @@ ChartJS.register(
 );
 
 export default function VitalsChart({ vitals }) {
+  // -------------------------------
+  // No History Case
+  // -------------------------------
   if (!vitals || vitals.length === 0) {
     return (
       <div className="chart-wrapper">
-        <p className="no-data">No vitals history recorded yet.</p>
+        <p className="no-data">📊 No vitals history recorded yet.</p>
       </div>
     );
   }
 
-  // X-axis labels (times)
+  // -------------------------------
+  // Labels from "recordedAt"
+  // -------------------------------
   const labels = vitals.map((v) =>
-    new Date(v.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    new Date(v.recordedAt).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    })
   );
 
+  // -------------------------------
+  // Chart Data
+  // -------------------------------
   const data = {
     labels,
     datasets: [
       {
         label: "Temperature (°F)",
-        data: vitals.map((v) => v.temperature),
-        borderColor: "#ef4444", // Red (Critical color)
-        backgroundColor: "rgba(239, 68, 68, 0.1)",
-        tension: 0.4, // Smooth curve
+        data: vitals.map((v) => v.temperature || 0),
+        borderColor: "#ef4444",
+        backgroundColor: "rgba(239, 68, 68, 0.18)",
+        tension: 0.4,
         pointRadius: 4,
-        pointBackgroundColor: "#ef4444",
-        pointBorderWidth: 2,
-        pointHoverRadius: 6,
-        borderWidth: 3
+        pointBorderColor: "#ef4444",
+        pointBackgroundColor: "#fff",
+        borderWidth: 3,
+        fill: true,
       },
       {
         label: "Pulse (bpm)",
-        data: vitals.map((v) => v.pulse),
-        borderColor: "#3b82f6", // Blue (Primary color)
-        backgroundColor: "rgba(59, 130, 246, 0.1)",
+        data: vitals.map((v) => v.pulse || 0),
+        borderColor: "#0ea5e9",
+        backgroundColor: "rgba(14, 165, 233, 0.18)",
         tension: 0.4,
         pointRadius: 4,
-        pointBackgroundColor: "#3b82f6",
-        pointBorderWidth: 2,
-        pointHoverRadius: 6,
-        borderWidth: 3
+        pointBorderColor: "#0ea5e9",
+        pointBackgroundColor: "#fff",
+        borderWidth: 3,
+        fill: true,
       },
       {
-        label: "SpO2 (%)",
-        data: vitals.map((v) => v.spo2),
-        borderColor: "#10b981", // Teal/Green (Stable color)
-        backgroundColor: "rgba(16, 185, 129, 0.1)",
+        label: "SpO₂ (%)",
+        data: vitals.map((v) => v.spo2 || 0),
+        borderColor: "#10b981",
+        backgroundColor: "rgba(16, 185, 129, 0.18)",
         tension: 0.4,
         pointRadius: 4,
-        pointBackgroundColor: "#10b981",
-        pointBorderWidth: 2,
-        pointHoverRadius: 6,
-        borderWidth: 3
-      }
-    ]
+        pointBorderColor: "#10b981",
+        pointBackgroundColor: "#fff",
+        borderWidth: 3,
+        fill: true,
+      },
+    ],
   };
 
+  // -------------------------------
+  // Chart Options
+  // -------------------------------
   const options = {
     responsive: true,
-    maintainAspectRatio: false, // Allows height to adapt
+    maintainAspectRatio: false,
+    animation: {
+      duration: 2000,
+      easing: "easeOutQuart",
+    },
     interaction: {
-      mode: 'index',
+      mode: "index",
       intersect: false,
     },
     plugins: {
       legend: {
         position: "top",
-        align: "end",
         labels: {
-          font: { family: "'Outfit', sans-serif", size: 12, weight: 600 },
+          font: {
+            family: "'Plus Jakarta Sans', sans-serif",
+            size: 12,
+            weight: 600,
+          },
+          color: "#64748b",
           usePointStyle: true,
-          boxWidth: 8,
-          padding: 20
-        }
+          padding: 18,
+        },
       },
       tooltip: {
-        backgroundColor: 'rgba(15, 23, 42, 0.9)',
-        titleFont: { family: "'Outfit', sans-serif", size: 13 },
-        bodyFont: { family: "'Outfit', sans-serif", size: 12 },
-        padding: 12,
+        backgroundColor: "rgba(15,23,42,0.95)",
         cornerRadius: 10,
-        displayColors: true
-      }
+        padding: 12,
+        titleFont: {
+          family: "'Plus Jakarta Sans', sans-serif",
+          size: 13,
+          weight: 700,
+        },
+        bodyFont: {
+          family: "'Plus Jakarta Sans', sans-serif",
+          size: 12,
+        },
+        borderColor: "rgba(255,255,255,0.1)",
+        borderWidth: 1,
+      },
     },
     scales: {
       y: {
         beginAtZero: false,
         grid: {
-          color: 'rgba(0, 0, 0, 0.04)', // Very subtle grid
-          drawBorder: false,
+          color: "rgba(226,232,240,0.6)",
+          borderDash: [5, 5],
         },
         ticks: {
-          font: { family: "'Outfit', sans-serif", size: 11 },
-          color: '#94a3b8'
-        }
+          font: { family: "'Plus Jakarta Sans'", size: 11, weight: 500 },
+          color: "#94a3b8",
+        },
       },
       x: {
-        grid: {
-          display: false, // Hide X grid for cleaner look
-        },
+        grid: { display: false },
         ticks: {
-          font: { family: "'Outfit', sans-serif", size: 11 },
-          color: '#94a3b8'
-        }
-      }
-    }
+          font: { family: "'Plus Jakarta Sans'", size: 11, weight: 500 },
+          color: "#94a3b8",
+        },
+      },
+    },
   };
 
   return (
     <div className="chart-wrapper">
-      <div style={{ height: "300px" }}> {/* Fixed height container for Chart.js */}
+      <div className="chart-container-inner">
         <Line data={data} options={options} />
       </div>
     </div>

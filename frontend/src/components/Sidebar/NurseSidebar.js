@@ -9,23 +9,29 @@ export default function NurseSidebar() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    navigate("/"); // Go back to landing page
+    navigate("/"); 
   };
 
   return (
     <div className="sidebar">
-      {/* Header Section */}
-      <div style={{ textAlign: "center" }}>
-        <h2 className="logo">🏥 HealthFlow</h2>
-        <div style={{ margin: "20px 0", color: "#14b8a6" }}>
-          <FaUserNurse size={48} />
-          <h3 className="sidebar-title" style={{ marginTop: "8px", fontSize: "1rem" }}>
-            Nurse Panel
-          </h3>
+      {/* Header */}
+      <div className="logo-container">
+        <h2 className="logo">
+          <span>🏥</span> HealthFlow
+        </h2>
+        <div 
+          className="role-badge" 
+          style={{ 
+            color: '#0d9488', 
+            background: '#f0fdfa',
+            border: '1px solid #ccfbf1'
+          }}
+        >
+          <FaUserNurse /> Nurse Panel
         </div>
       </div>
 
-      {/* No Navigation Links (Empty Spacer) */}
+      {/* Spacer */}
       <div style={{ flex: 1 }}></div>
 
       {/* Logout Button */}

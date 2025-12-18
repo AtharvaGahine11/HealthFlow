@@ -9,7 +9,7 @@ const socket = io("http://localhost:8000", { transports: ["websocket"] });
 
 export default function DoctorDashboard() {
   const [assignedPatients, setAssignedPatients] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // 🔍 Search State
+  const [searchTerm, setSearchTerm] = useState(""); 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 

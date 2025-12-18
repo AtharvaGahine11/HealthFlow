@@ -1,167 +1,216 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --primary: #3b82f6;
-  --bg-color: #f8fafc;
-  --glass: rgba(255, 255, 255, 0.9);
-  --text-dark: #0f172a;
-  --text-light: #64748b;
+  --primary: #0ea5e9;        /* Sky Blue */
+  --primary-dark: #0284c7;   /* Deep Blue */
+  --text-main: #0f172a;      /* Dark Slate */
+  --text-muted: #64748b;     /* Muted Slate */
+  --bg-soft: #f8fafc;        /* Very light slate bg */
+  --white: #ffffff;
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-/* --- LAYOUT FIX --- */
+/* --- LAYOUT --- */
 .triage-container {
   display: flex;
-  height: 100vh;        /* Force full viewport height */
-  overflow: hidden;     /* Prevent the whole window from scrolling */
-  font-family: 'Outfit', sans-serif;
-  background-color: #f1f5f9;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--bg-soft);
+  /* Matching subtle grid pattern */
+  background-image: 
+    linear-gradient(rgba(14, 165, 233, 0.03) 1px, transparent 1px), 
+    linear-gradient(90deg, rgba(14, 165, 233, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 .triage-main {
   flex: 1;
-  margin-left: 260px;   /* Match your sidebar width */
-  height: 100%;         /* Fill the visible height */
-  overflow-y: auto;     /* ENABLE SCROLLING inside this panel */
+  margin-left: 280px; /* Sidebar width */
+  height: 100%;
+  overflow-y: auto;
   padding: 3rem 4rem;
   position: relative;
-  
-  /* Tech Grid Background */
-  background-image: 
-    linear-gradient(#e2e8f0 1px, transparent 1px),
-    linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
-  background-size: 40px 40px;
+  z-index: 1;
 }
-/* ------------------ */
 
+/* Custom Scrollbar for Main Panel */
+.triage-main::-webkit-scrollbar {
+  width: 8px;
+}
+.triage-main::-webkit-scrollbar-track {
+  background: transparent;
+}
+.triage-main::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* --- HEADER --- */
 .triage-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 3rem;
-  animation: slideDown 0.8s ease-out;
+  animation: fadeUp 0.6s ease-out;
 }
 
 .triage-header h1 {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   font-weight: 800;
-  color: var(--text-dark);
+  color: var(--text-main);
   margin: 0;
   letter-spacing: -1px;
 }
 
 .triage-header p {
-  color: var(--text-light);
+  color: var(--text-muted);
   font-size: 1.1rem;
   margin: 5px 0 0 0;
 }
 
-/* --- Responsive Grid --- */
-.triage-grid {
-  display: grid;
-  /* Adjusts columns automatically based on available width */
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem;
-  padding-bottom: 6rem; /* Extra space at bottom so last cards aren't cut off */
+.active-count {
+  font-size: 3.5rem;
+  margin: 0;
+  color: var(--text-main);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -2px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* --- Card Styles --- */
+.active-label {
+  margin: 0;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+/* --- GRID --- */
+.triage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  padding-bottom: 4rem;
+}
+
+/* --- CARDS --- */
 .triage-card {
-  background: var(--glass);
-  backdrop-filter: blur(16px);
-  padding: 1.8rem;
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  padding: 2rem;
+  border-radius: 24px;
   border: 1px solid white;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
-  animation: popIn 0.5s ease-out forwards;
-  opacity: 0;
+  position: relative;
+  overflow: hidden;
+  
+  /* Animation Setup */
+  opacity: 0; 
+  animation: fadeUp 0.6s ease-out forwards;
 }
 
 .triage-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
+  border-color: #bae6fd;
   z-index: 5;
 }
 
 /* Critical Pulse */
 .triage-card.critical {
   border: 1px solid #fecaca;
-  animation: criticalPulse 2s infinite;
+  box-shadow: 0 10px 30px -5px rgba(239, 68, 68, 0.15);
+  animation: criticalPulse 2.5s infinite, fadeUp 0.6s ease-out forwards;
 }
 
 @keyframes criticalPulse {
-  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.2); border-color: #fecaca; }
+  50% { box-shadow: 0 0 20px 0 rgba(239, 68, 68, 0.1); border-color: #ef4444; }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); border-color: #fecaca; }
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
 }
 
 .patient-id {
   font-size: 0.75rem;
-  color: var(--text-light);
+  color: var(--text-muted);
   background: #f1f5f9;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-family: monospace;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', monospace;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .triage-card h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  margin: 0 0 0.2rem 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0 0 0.4rem 0;
+  letter-spacing: -0.5px;
 }
 
 .room-text {
-  color: var(--text-light);
-  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
   font-weight: 600;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
   display: block;
 }
 
 /* Badges */
 .status-pill {
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 30px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 800;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-.status-pill.critical { background: #fee2e2; color: #ef4444; }
-.status-pill.urgent { background: #fef3c7; color: #d97706; }
-.status-pill.stable { background: #dcfce7; color: #10b981; }
+.status-pill.critical { background: #fee2e2; color: #b91c1c; }
+.status-pill.urgent { background: #ffedd5; color: #c2410c; }
+.status-pill.stable { background: #dcfce7; color: #15803d; }
 
-/* Wait Time */
+/* Wait Time Bar */
 .wait-time-container {
-  margin: 1rem 0;
+  margin: 1rem 0 1.5rem 0;
 }
 .wait-label {
   display: flex;
   justify-content: space-between;
-  font-size: 0.8rem;
-  color: var(--text-light);
-  margin-bottom: 6px;
-  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.7rem;
 }
 .progress-bg {
-  height: 6px;
-  background: #e2e8f0;
+  height: 8px;
+  background: #f1f5f9;
   border-radius: 10px;
   overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
 }
 .progress-fill {
   height: 100%;
   border-radius: 10px;
-  transition: width 0.5s ease;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Doctor Select */
@@ -170,27 +219,35 @@
 }
 .doctor-select {
   width: 100%;
-  padding: 12px;
-  border-radius: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
   border: 1px solid #e2e8f0;
   background: #fff;
-  font-family: 'Outfit', sans-serif;
-  color: var(--text-dark);
-  font-weight: 500;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
   appearance: none;
+  /* Custom Arrow */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  transition: all 0.2s;
 }
 .doctor-select:hover {
   border-color: var(--primary);
-  background: #f8fafc;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+.doctor-select:focus {
+  outline: none;
+  border-color: var(--primary-dark);
 }
 
 /* Animations */
-@keyframes popIn {
-  from { opacity: 0; transform: scale(0.95) translateY(20px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-20px); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }

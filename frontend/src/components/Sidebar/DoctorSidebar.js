@@ -9,20 +9,29 @@ export default function DoctorSidebar() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    navigate("/"); // Go back to landing page
+    navigate("/"); 
   };
 
   return (
     <div className="sidebar">
-      {/* Header / Identity */}
-      <div style={{ textAlign: "center", marginBottom: '2rem' }}>
-        <h2 className="logo">🏥 HealthFlow</h2>
-        <div className="role-badge" style={{ color: '#3b82f6', background: '#eff6ff' }}>
+      {/* Header */}
+      <div className="logo-container">
+        <h2 className="logo">
+          <span>🏥</span> HealthFlow
+        </h2>
+        <div 
+          className="role-badge" 
+          style={{ 
+            color: '#6366f1', 
+            background: '#eef2ff',
+            border: '1px solid #c7d2fe'
+          }}
+        >
           <FaUserMd /> Doctor Panel
         </div>
       </div>
 
-      {/* Spacer to push logout to bottom */}
+      {/* Spacer */}
       <div style={{ flex: 1 }}></div>
 
       {/* Logout Button */}
